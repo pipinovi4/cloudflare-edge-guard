@@ -41,3 +41,56 @@ Copy script:
 ```bash
 sudo cp cf-edge-guard.sh /usr/local/bin/
 sudo chmod +x /usr/local
+
+Add to root crontab:
+sudo crontab -e
+0 4 * * * flock -n /tmp/cf_edge.lock /usr/local/bin/cf-edge-guard.sh >> /var/log/cf_edge_update.log 2>&1
+```
+
+🛡️ Security Design
+
+Fail-safe: aborts if Cloudflare IP list fetch fails
+
+Idempotent: does not duplicate rules
+
+Safe reload: validates nginx -t before applying changes
+
+Logs all operations
+
+📦 What It Does
+
+Fetches Cloudflare IPv4 + IPv6 ranges
+
+Removes existing 80/443 UFW rules (non-SSH)
+
+Inserts Cloudflare-only allow rules
+
+Updates Nginx real IP configuration
+
+Reloads Nginx safely
+
+🧠 Use Case
+
+Ideal for:
+
+SaaS backends
+
+API servers
+
+Production VPS behind Cloudflare
+
+Self-hosted platform
+
+⚠️ Important
+
+Ensure:
+
+```
+sudo ufw status verbose
+```
+
+Shows:
+
+```
+Default: deny (incoming)
+```
