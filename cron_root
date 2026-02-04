@@ -1,0 +1,1 @@
+0 4 * * * /usr/local/bin/cf_edge_update.sh >> /var/log/cf_edge_update.log 2>&1
