@@ -32,7 +32,7 @@ Cloudflare Edge Guard enforces proper origin isolation automatically.
 ---
 
 ## 📦 Repository Structure
-
+```bash
 cloudflare-edge-guard/
 │
 ├── scripts/
@@ -50,6 +50,7 @@ cloudflare-edge-guard/
 ├── VERSION
 ├── .gitignore
 └── README.md
+```
 
 ---
 
