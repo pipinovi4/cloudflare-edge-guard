@@ -1,0 +1,11 @@
+[Unit]
+Description=Update Cloudflare Edge Guard ranges
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/lib/cloudflare-edge-guard/edge-guard.sh update --config /etc/cloudflare-edge-guard/config.env
+Nice=10
+PrivateTmp=true
+ProtectHome=true

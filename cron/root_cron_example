@@ -1,1 +1,2 @@
-0 4 * * * /usr/local/bin/cf_edge_update.sh >> /var/log/cf_edge_update.log 2>&1
+# Legacy alternative. Prefer the systemd timer in templates/.
+0 4 * * * flock -n /run/cloudflare-edge-guard-cron.lock /usr/local/lib/cloudflare-edge-guard/edge-guard.sh update --config /etc/cloudflare-edge-guard/config.env

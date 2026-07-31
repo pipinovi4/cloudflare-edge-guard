@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily Cloudflare Edge Guard range update
+
+[Timer]
+OnCalendar=*-*-* 04:00:00 UTC
+Persistent=true
+RandomizedDelaySec=10m
+
+[Install]
+WantedBy=timers.target
