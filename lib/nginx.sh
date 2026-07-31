@@ -53,13 +53,13 @@ EOF
 nginx_test() { run nginx -t; }
 nginx_reload() { run systemctl reload nginx; }
 
-apply_nginx() {
+apply_nginx() (
     local ranges="$1" temporary changed=false site_tmp realip_tmp
     [[ "$ENABLE_NGINX" == true ]] || return 0
     require_command nginx
     temporary="$(mktemp -d)"
     site_tmp="$temporary/site" realip_tmp="$temporary/realip"
-    trap 'rm -rf -- "$temporary"' RETURN
+    trap 'rm -rf -- "$temporary"' EXIT
     render_site "$site_tmp"
     render_realip "$ranges" "$realip_tmp"
     ensure_dir "$(dirname "$NGINX_SITE_PATH")"
@@ -81,4 +81,4 @@ apply_nginx() {
     else
         nginx_test
     fi
-}
+)

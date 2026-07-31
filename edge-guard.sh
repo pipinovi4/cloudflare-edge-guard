@@ -98,22 +98,22 @@ prepare_ranges() {
     fi
 }
 
-do_prepare() {
+do_prepare() (
     preflight_base
     check_upstream
     local temporary
     temporary="$(mktemp -d)"
-    trap 'rm -rf -- "$temporary"' RETURN
+    trap 'rm -rf -- "$temporary"' EXIT
     prepare_ranges "$temporary"
     apply_nginx "$temporary"
     info "Prepare complete; firewall was not restricted"
-}
+)
 
-do_update() {
+do_update() (
     preflight_base
     local temporary
     temporary="$(mktemp -d)"
-    trap 'rm -rf -- "$temporary"' RETURN
+    trap 'rm -rf -- "$temporary"' EXIT
     fetch_ranges "$temporary"
     if [[ -d "$STATE_DIR/ranges" ]] && cmp -s "$temporary/ipv4" "$STATE_DIR/ranges/ipv4" && cmp -s "$temporary/ipv6" "$STATE_DIR/ranges/ipv6"; then
         apply_nginx "$temporary"
@@ -127,7 +127,7 @@ do_update() {
     run install -m 0644 "$temporary/ipv4" "$STATE_DIR/ranges/ipv4"
     run install -m 0644 "$temporary/ipv6" "$STATE_DIR/ranges/ipv6"
     info "Cloudflare ranges updated"
-}
+)
 
 do_enforce() {
     preflight_base

@@ -8,7 +8,7 @@ setup() {
 teardown() { teardown_workspace; }
 
 @test "prepare implementation never calls firewall application" {
-    run awk '/^do_prepare\(\)/,/^}/' edge-guard.sh
+    run awk '/^do_prepare\(\)/,/^\)/' edge-guard.sh
     [ "$status" -eq 0 ]
     [[ "$output" != *"apply_firewall"* ]]
 }
